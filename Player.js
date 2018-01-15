@@ -1,5 +1,5 @@
-function Player(number){
-  this.number = number;
+function Player(id){
+  this.id = id;
   this.hand = [];
   this.pocket = 0;
 }
