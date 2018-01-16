@@ -10,7 +10,6 @@ console.log("Starting Server...");
 console.log("Generating Rooms...");
 const Room = require("./Room.js");
 var room = new Room(0);
-
 var express = require('express');
 var port = 3000;
 var app = express();
@@ -22,7 +21,6 @@ console.log("server running on port:" + port);
 var socket = require('socket.io');
 var io = socket(server);
 
-
 io.sockets.on('connection', newConnection);
 
 
@@ -30,9 +28,14 @@ function newConnection(socket){
   if(room.players.length < 9){
     console.log('New Player Online, socket connection: ' + socket.id);
     room.newPlayer(socket.id);
-    room.startRound(socket);
   }else{
     console.log("Full Room");
+  }
+  if(room.players.length > 3 && room.roundOver){
+    room.startRound(socket);
+  }
+  if(!room.roundOver){
+    socket.emit('update-hand', 'aguarde o fim do round');
   }
 
   socket.on('disconnect', function() {

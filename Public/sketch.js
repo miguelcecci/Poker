@@ -1,6 +1,6 @@
 var socket;
 var playerList = [];
-var hand = 0;
+var hand = "Waiting for players";
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -8,7 +8,9 @@ function setup() {
   background(255);
   socket.on('update-hand', function(a) {
     hand = a;
-  })
+  });
+
+  text(hand, windowWidth/2, windowHeight/2);
 
 }
 
